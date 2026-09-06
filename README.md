@@ -1,18 +1,37 @@
-# Learn to Type — A Beginner's Guide
+# TypeRight
 
-A simple, single-page website that helps total beginners learn touch typing. Curated resources, clear guidance, and a step-by-step learning path.
+A beginner's guide to [touch typing](https://en.wikipedia.org/wiki/Touch_typing) — typing without looking at the keyboard. The site walks complete novices through proper finger placement, introduces four free tools in the right order, and covers the habits that actually improve speed and accuracy.
 
-## Resources
+**Last updated:** September 2026
 
-- **TypingClub** — Learn touch typing systematically
-- **Keybr** — Train individual key movements and weak areas
-- **Monkeytype** — Practice overall speed, accuracy, and rhythm
-- **10FastFingers** — Test your typing performance
+## What's Inside
+
+- **Getting Started** — home row finger placement with a color-coded keyboard
+- **Learning Path** — a step-by-step progression through TypingClub, Keybr, Monkeytype, and 10FastFingers
+- **WPM & Accuracy** — what the numbers mean and how to track progress
+- **Speed Tips** — five concrete habits that build speed without sacrificing accuracy
+- **FAQ** — answers to the most common beginner questions
+
+## Project Structure
+
+```
+├── index.html                  # The entire site (HTML + CSS + JS)
+├── README.md
+├── assets/
+│   └── icons/
+│       ├── favicon.svg         # Site favicon (keyboard icon)
+│       ├── typingclub.png      # Tool favicons
+│       ├── keybr.png
+│       ├── monkeytype.png
+│       └── 10fastfingers.png
+└── docs/
+    └── chatgpt-brainstorm.md   # Original content brainstorm
+```
 
 ## Hosting
 
-This site is hosted on [GitHub Pages](https://pages.github.com/).
+Hosted on [GitHub Pages](https://pages.github.com/).
 
 ## Local Development
 
-Simply open `index.html` in your browser. No build step required.
+Open `index.html` in your browser. No build step required.

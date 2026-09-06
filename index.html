@@ -4,10 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn to Type — A Beginner's Guide to Touch Typing</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════════ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 1.5rem;
+            transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+            border-bottom: 1px solid transparent;
+            background: transparent;
+        }
+        .nav.scrolled {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom-color: rgba(0,0,0,0.04);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+        }
+        .nav-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .nav-brand {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #111827;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .brand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+            border: 1px solid #d1d5db;
+            box-shadow: 0 2px 0 #c8ccd4, 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .brand-icon-key {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 0.68rem;
+            color: #dc2626;
+            line-height: 1;
+        }
+        .brand-accent {
+            color: #dc2626;
+        }
+        .brand-type {
+            color: #6b7280;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.1rem;
+            list-style: none;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-links a {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-decoration: none;
+            padding: 0.4rem 0.65rem;
+            border-radius: 8px;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            border-radius: 1px;
+            background: #dc2626;
+            transition: width 0.25s ease, left 0.25s ease;
+        }
+        .nav-links a:hover {
+            color: #374151;
+        }
+        .nav-links a:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+        .nav-links a.active {
+            color: #dc2626;
+        }
+        .nav-links a.active::after {
+            width: 80%;
+            left: 10%;
+        }
+
+        @media (max-width: 700px) {
+            .nav-links { gap: 0; }
+            .nav-links a { font-size: 0.78rem; padding: 0.35rem 0.5rem; }
+            .nav-links a::after { bottom: 1px; height: 1.5px; }
+            .nav-brand span:last-child { display: none; }
+        }
+
         /* ═══════════════════════════════════════════
            RESET & BASE
            ═══════════════════════════════════════════ */
@@ -16,50 +135,38 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
             font-size: 17px;
             line-height: 1.75;
-            color: #c8cdd8;
-            background: #151825;
+            color: #1f2937;
+            background: #f6f7f9;
             -webkit-font-smoothing: antialiased;
         }
 
         h1, h2, h3, h4, h5 {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #eef0f6;
+            color: #111827;
             line-height: 1.3;
         }
 
-        a { color: inherit; }
-
-        strong { color: #eef0f6; font-weight: 600; }
+        strong { color: #111827; font-weight: 600; }
 
         /* ═══════════════════════════════════════════
-           UTILITY: Highlight / Gradient Text
+           HIGHLIGHTS
            ═══════════════════════════════════════════ */
-        .hl {
-            font-weight: 600;
-        }
-        .hl-green  { color: #4ade80; }
-        .hl-orange { color: #fb923c; }
-        .hl-blue   { color: #f87171; }
-        .hl-red    { color: #f87171; }
-        .hl-purple { color: #fbbf24; }
-        .hl-cyan   { color: #22d3ee; }
+        .hl { font-weight: 600; }
+        .hl-red    { color: #dc2626; }
+        .hl-orange { color: #d97706; }
+        .hl-green  { color: #16a34a; }
+        .hl-rose   { color: #e11d48; }
+        .hl-amber  { color: #b45309; }
+        .hl-purple { color: #7c3aed; }
 
         .gradient-text {
-            background: linear-gradient(135deg, #f87171, #fb923c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .gradient-text-warm {
-            background: linear-gradient(135deg, #f87171, #fbbf24);
+            background: linear-gradient(135deg, #dc2626, #ea580c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -69,345 +176,729 @@
            LAYOUT
            ═══════════════════════════════════════════ */
         .section {
-            max-width: 880px;
+            max-width: 860px;
             margin: 0 auto;
             padding: 5rem 1.5rem;
         }
-
         .section-title {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             font-weight: 800;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             text-align: center;
+            position: relative;
+            padding-top: 1.2rem;
         }
-
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #dc2626, #ea580c);
+        }
         .section-subtitle {
             text-align: center;
-            color: #8b92a8;
-            font-size: 1.1rem;
+            color: #6b7280;
+            font-size: 1.08rem;
             line-height: 1.7;
             margin-bottom: 2.5rem;
-            max-width: 640px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .divider {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 1.5rem;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #d1d5db;
+        }
+        .divider .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #dc2626;
+            flex-shrink: 0;
+        }
+
+        .band {
+            width: 100%;
+            padding: 5rem 0;
+        }
+        .band-alt {
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #faq {
+            background: #f5f3ff;
+            border-color: #ede9fe;
+        }
+        .band-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           CARDS
+           ═══════════════════════════════════════════ */
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+        }
+
+        /* ═══════════════════════════════════════════
+           TL;DR — Quick Access
+           ═══════════════════════════════════════════ */
+        .hero-tldr {
+            margin-top: 2.5rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding: 1.2rem 1rem;
+        }
+        .tldr-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .tldr-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .tldr-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .tldr-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            flex-shrink: 0;
+            transition: transform 0.15s;
+        }
+        .tldr-circle:hover {
+            transform: scale(1.1);
+        }
+        .tldr-circle img {
+            border-radius: 4px;
+        }
+        .tldr-circle-1 { border-color: #16a34a; }
+        .tldr-circle-2 { border-color: #d97706; }
+        .tldr-circle-3 { border-color: #dc2626; }
+        .tldr-circle-4 { border-color: #ea580c; }
+        .tldr-arrow {
+            font-size: 1rem;
+            color: #d1d5db;
         }
 
         /* ═══════════════════════════════════════════
            HERO
            ═══════════════════════════════════════════ */
         .hero {
-            position: relative;
             text-align: center;
-            padding: 6rem 1.5rem 5rem;
-            overflow: hidden;
-            background: #151825;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(248,113,113,0.1) 0%, transparent 70%);
-            pointer-events: none;
+            padding: 4.5rem 1.5rem 2rem;
+            background: #f6f7f9;
         }
         .hero h1 {
-            font-size: 3.4rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             line-height: 1.15;
-            position: relative;
+            min-height: 2.4em;
         }
         .hero p {
-            font-size: 1.25rem;
-            color: #8b92a8;
-            max-width: 580px;
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 680px;
             margin: 0 auto;
-            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .hero p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-sub {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .hero-sub.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .cursor {
+            font-weight: 400;
+            color: #dc2626;
+            animation: blink 1.2s step-end infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        /* ═══════════════════════════════════════════
-           CARDS (shared glass style)
-           ═══════════════════════════════════════════ */
-        .card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            backdrop-filter: blur(8px);
+        /* ── Hero Keyboard ── */
+        .hero-keyboard {
+            margin-top: 2rem;
+            display: inline-block;
+            background: #e5e7eb;
+            border-radius: 14px;
+            padding: 14px 16px 12px;
+            box-shadow:
+                0 1px 0 #d1d5db,
+                0 4px 16px rgba(0,0,0,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
-
-        /* ═══════════════════════════════════════════
-           4 RULES
-           ═══════════════════════════════════════════ */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 1.2rem;
+        .hero-keyboard.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .rule-card {
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: transform 0.25s, border-color 0.25s;
-        }
-        .rule-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.12);
-        }
-        .rule-card .icon {
-            font-size: 2.4rem;
-            margin-bottom: 0.8rem;
-        }
-        .rule-card h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-        }
-        .rule-card p {
-            font-size: 0.95rem;
-            color: #8b92a8;
-            line-height: 1.65;
-        }
-
-        /* ═══════════════════════════════════════════
-           DIVIDER (between major sections)
-           ═══════════════════════════════════════════ */
-        .divider {
-            max-width: 880px;
-            margin: 0 auto;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-        }
-
-        /* ═══════════════════════════════════════════
-           FULL-WIDTH BAND (alternating bg)
-           ═══════════════════════════════════════════ */
-        .band {
-            width: 100%;
-            padding: 5rem 0;
-        }
-        .band-darker {
-            background: #111422;
-        }
-        .band-inner {
-            max-width: 880px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* ═══════════════════════════════════════════
-           FINGER PLACEMENT — Keyboard
-           ═══════════════════════════════════════════ */
-        .keyboard {
-            padding: 2.5rem 2rem;
-            text-align: center;
-            overflow-x: auto;
-        }
-        .keyboard-row {
+        .hero-kb-row {
             display: flex;
             justify-content: center;
-            gap: 0.45rem;
-            margin-bottom: 0.45rem;
-            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 4px;
         }
-        .key {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
+        .hero-key {
+            height: 36px;
+            min-width: 34px;
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.06);
-            color: #8b92a8;
-            flex-shrink: 0;
-            transition: background 0.2s;
+            font-size: 0.78rem;
+            color: #4b5563;
+            background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+            border: 1px solid #d1d5db;
+            box-shadow:
+                0 2px 0 #c8ccd4,
+                0 2px 2px rgba(0,0,0,0.06);
         }
-        .key.home {
-            background: linear-gradient(135deg, #f87171, #ef4444);
+        .hero-key.home {
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
             color: white;
             border-color: transparent;
-            box-shadow: 0 0 20px rgba(248,113,113,0.3);
+            box-shadow:
+                0 2px 0 #991b1b,
+                0 2px 6px rgba(220,38,38,0.3);
+            position: relative;
         }
-        .key.thumb {
-            width: 170px;
-            background: rgba(255,255,255,0.05);
-            color: #5a607a;
-            font-size: 0.9rem;
+        .hero-key.home::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 2px;
+            border-radius: 1px;
+            background: rgba(255,255,255,0.5);
         }
-        .finger-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #5a607a;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+        .hero-key.num {
+            font-size: 0.72rem;
+            color: #6b7280;
         }
-        .key-legend {
-            margin-top: 1.5rem;
+        .hero-key.tilde {
+            min-width: 34px;
+            font-size: 0.72rem;
+            color: #6b7280;
+        }
+        .hero-key.wide {
+            min-width: 50px;
+            font-size: 0.62rem;
+            color: #6b7280;
+            letter-spacing: 0.02em;
+        }
+        .hero-key.wide-lg {
+            min-width: 62px;
+            font-size: 0.62rem;
+            color: #6b7280;
+            letter-spacing: 0.02em;
+        }
+        .hero-key.mod {
+            min-width: 42px;
+            font-size: 0.6rem;
+            color: #9ca3af;
+        }
+        .hero-key.space {
+            flex: 1;
+            max-width: 240px;
+            font-size: 0.68rem;
+            color: #9ca3af;
+        }
+
+
+        /* ── Rules (compact) ── */
+        .rules-list {
+            list-style: none;
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.8rem;
         }
-        .key-legend span {
-            font-size: 0.9rem;
-            color: #8b92a8;
+        .rules-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            padding: 1.4rem 1.6rem;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .rules-list li:hover {
+            border-color: #e5e7eb;
+        }
+        .rules-list li .rule-head {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
-        .key-legend .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .key-legend .dot.home-dot {
-            background: #f87171;
-        }
-
-        /* Finger map */
-        .finger-map {
-            margin-top: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .finger-map .hand {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px;
-            padding: 1.4rem;
-        }
-        .finger-map h4 {
-            text-align: center;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            color: #c8cdd8;
-        }
-        .finger-map .row {
+        .rules-list li .rule-num {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid;
             display: flex;
-            justify-content: space-between;
-            font-size: 0.95rem;
-            padding: 0.3rem 0;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
-        .finger-map .row .finger-name {
+        .rules-list li .rule-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .rules-list li .rule-body > strong {
+            display: block;
+            font-size: 1.08rem;
+            color: #111827;
+        }
+        .rules-list li .rule-body > span {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-left: calc(38px + 0.8rem);
+        }
+        .rules-list li .rule-body > span strong {
+            color: #374151;
             font-weight: 600;
-            color: #f87171;
-            min-width: 64px;
+        }
+        .rules-list li > span strong {
+            color: #374151;
+            font-weight: 600;
         }
 
-        .keyboard-note {
+        /* Per-rule colors */
+        .rules-list li.rule-eyes    { background: rgba(22,163,74,0.04); }
+        .rules-list li.rule-eyes .rule-num       { color: #16a34a; border-color: #16a34a; }
+        .rules-list li.rule-eyes .rule-body > strong { color: #16a34a; }
+
+        .rules-list li.rule-fingers  { background: rgba(217,119,6,0.04); }
+        .rules-list li.rule-fingers .rule-num       { color: #d97706; border-color: #d97706; }
+        .rules-list li.rule-fingers .rule-body > strong { color: #d97706; }
+
+        .rules-list li.rule-accuracy { background: rgba(220,38,38,0.04); }
+        .rules-list li.rule-accuracy .rule-num       { color: #dc2626; border-color: #dc2626; }
+        .rules-list li.rule-accuracy .rule-body > strong { color: #dc2626; }
+
+        .rules-list li.rule-practice { background: rgba(124,58,237,0.04); }
+        .rules-list li.rule-practice .rule-num       { color: #7c3aed; border-color: #7c3aed; }
+        .rules-list li.rule-practice .rule-body > strong { color: #7c3aed; }
+
+        /* ═══════════════════════════════════════════
+           FINGER PLACEMENT
+           ═══════════════════════════════════════════ */
+        .finger-section {
+            margin-top: 3rem;
+            padding: 2.2rem 2rem;
+        }
+        .finger-section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.8rem;
+        }
+        .hr-note {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        /* Color-coded keyboard */
+        .finger-keyboard {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 0;
+            margin: 1.5rem 0;
+        }
+        .fk-hand-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .fk-cols {
+            display: flex;
+            gap: 4px;
+        }
+        .fk-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .fk-sep {
+            width: 20px;
+            flex-shrink: 0;
+        }
+        .fk-hand-label {
             text-align: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 0.6rem;
+        }
+        .fk {
+            width: 38px;
+            height: 36px;
+            border-radius: 9px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: white;
+            opacity: 0.85;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        .fk:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .fk.home {
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        .fk.home::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 2px;
+            border-radius: 1px;
+            background: #ffffff;
+        }
+
+        /* Finger colors */
+        .fk.lp { background: #e76f51; }  /* Left Pinky  — coral */
+        .fk.lr { background: #e9a23b; }  /* Left Ring   — amber */
+        .fk.lm { background: #57a773; }  /* Left Middle — green */
+        .fk.li { background: #4a90d9; }  /* Left Index  — blue */
+        .fk.ri { background: #7c5cbf; }  /* Right Index — purple */
+        .fk.rm { background: #d47fa5; }  /* Right Middle — rose */
+        .fk.rr { background: #6bb8a8; }  /* Right Ring  — teal */
+        .fk.rp { background: #b07d62; }  /* Right Pinky — brown */
+        .finger-tip {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
             margin-top: 1.5rem;
-            color: #8b92a8;
-            font-size: 0.95rem;
+            padding: 0.8rem 1rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        .finger-tip-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
         /* ═══════════════════════════════════════════
-           LEARNING PATH — Timeline
+           LEARNING PATH
            ═══════════════════════════════════════════ */
-        .path-wrapper {
-            position: relative;
+        /* Path overview */
+        .path-overview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
-        .path-step {
-            display: grid;
-            grid-template-columns: 80px 1fr;
-            gap: 0;
-        }
-        .path-timeline {
+        .path-ov-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 0.3rem;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: background 0.15s, transform 0.15s;
+            min-width: 100px;
+        }
+        .path-ov-item:hover {
+            background: rgba(0,0,0,0.04);
+            transform: translateY(-2px);
+        }
+        .path-ov-item img {
+            border-radius: 6px;
+        }
+        .path-ov-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #111827;
+        }
+        .path-ov-desc {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .path-ov-arrow {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .path-ov-item:nth-child(1) .path-ov-desc { color: #16a34a; }
+        .path-ov-item:nth-child(3) .path-ov-desc { color: #d97706; }
+        .path-ov-item:nth-child(5) .path-ov-desc { color: #dc2626; }
+        .path-ov-item:nth-child(7) .path-ov-desc { color: #ea580c; }
+        .path-ov-arrow:nth-child(2) { color: #16a34a; }
+        .path-ov-arrow:nth-child(4) { color: #d97706; }
+        .path-ov-arrow:nth-child(6) { color: #dc2626; }
+
+        .path-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .path-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            bottom: 28px;
+            left: 50%;
+            width: 2px;
+            background: #374151;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .path-step {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.2rem;
         }
         .path-number {
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
+            font-weight: 900;
             color: white;
-            flex-shrink: 0;
-            z-index: 1;
+            z-index: 2;
+            margin-bottom: -20px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }
-        .path-line {
-            width: 2px;
-            flex-grow: 1;
-            background: rgba(255,255,255,0.08);
-            margin: 0.4rem 0;
-        }
-        .path-step:last-child .path-line { display: none; }
 
-        .step-1 .path-number { background: linear-gradient(135deg, #4ade80, #22c55e); }
-        .step-2 .path-number { background: linear-gradient(135deg, #fb923c, #f97316); }
-        .step-3 .path-number { background: linear-gradient(135deg, #f87171, #ef4444); }
-        .step-4 .path-number { background: linear-gradient(135deg, #f87171, #ef4444); }
-        .step-5 .path-number { background: linear-gradient(135deg, #c084fc, #a855f7); }
+        .step-1 .path-number { background: #16a34a; }
+        .step-2 .path-number { background: #d97706; }
+        .step-3 .path-number { background: #dc2626; }
+        .step-4 .path-number { background: #ea580c; }
+        .step-5 .path-number { background: #7c3aed; }
 
         .path-content {
-            padding: 2rem 2.2rem;
-            margin-bottom: 1.5rem;
+            width: 100%;
+            padding: 2.2rem 2rem 1.6rem;
+            border-radius: 14px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
+        .step-1 .path-content { border-top: 3px solid #16a34a; border-bottom: 3px solid #16a34a; }
+        .step-2 .path-content { border-top: 3px solid #d97706; border-bottom: 3px solid #d97706; }
+        .step-3 .path-content { border-top: 3px solid #dc2626; border-bottom: 3px solid #dc2626; }
+        .step-4 .path-content { border-top: 3px solid #ea580c; border-bottom: 3px solid #ea580c; }
+        .step-5 .path-content { border-top: 3px solid #7c3aed; border-bottom: 3px solid #7c3aed; }
+
         .path-content .step-label {
+            display: inline-block;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.3rem;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            color: white;
+            margin-bottom: 0.6rem;
         }
-        .step-1 .step-label { color: #4ade80; }
-        .step-2 .step-label { color: #fb923c; }
-        .step-3 .step-label { color: #f87171; }
-        .step-4 .step-label { color: #f87171; }
-        .step-5 .step-label { color: #c084fc; }
+        .step-1 .step-label { background: #16a34a; }
+        .step-2 .step-label { background: #d97706; }
+        .step-3 .step-label { background: #dc2626; }
+        .step-4 .step-label { background: #ea580c; }
+        .step-5 .step-label { background: #7c3aed; }
 
         .path-content h3 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.9rem;
+            text-align: center;
+        }
+        .path-content h3 a {
+            color: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.15s;
+        }
+        .path-content h3 a:hover {
+            opacity: 0.75;
+        }
+        .step-1 .path-content h3 a { color: #16a34a; }
+        .step-2 .path-content h3 a { color: #d97706; }
+        .step-3 .path-content h3 a { color: #dc2626; }
+        .step-4 .path-content h3 a { color: #ea580c; }
+        .step-5 .path-content h3 a { color: #7c3aed; }
+        .path-content h3 a img {
+            border-radius: 4px;
+            flex-shrink: 0;
         }
         .path-content .tool-url {
             font-size: 0.9rem;
-            color: #5a607a;
+            color: #9ca3af;
             margin-bottom: 0.8rem;
+            text-align: center;
+        }
+        .path-content .tool-url a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .path-content .tool-url a:hover {
+            color: #6b7280;
         }
         .path-content p {
-            font-size: 1.02rem;
-            color: #a0a7b8;
+            font-size: 1rem;
+            color: #4b5563;
             margin-bottom: 0.6rem;
+            line-height: 1.75;
         }
 
-        /* Tips (left-border callout) */
+        /* Tips */
         .tip {
             border-left: 3px solid;
+            border-right: 3px solid;
             padding: 1rem 1.2rem;
-            border-radius: 0 10px 10px 0;
+            border-radius: 10px;
             font-size: 0.97rem;
             margin-top: 1.2rem;
             line-height: 1.7;
+            text-align: left;
         }
-        .tip-green  { background: rgba(74,222,128,0.06); border-color: #4ade80; color: #a7d9be; }
-        .tip-orange { background: rgba(251,146,60,0.06); border-color: #fb923c; color: #c9a882; }
-        .tip-blue   { background: rgba(248,113,113,0.06); border-color: #f87171; color: #c9a0a0; }
-        .tip-red    { background: rgba(248,113,113,0.06); border-color: #f87171; color: #c9a0a0; }
-        .tip-purple { background: rgba(251,146,60,0.06); border-color: #fb923c; color: #b8a588; }
+        .tip-green  { background: #f0fdf4; border-color: #16a34a; color: #166534; }
+        .tip-orange { background: #fffbeb; border-color: #d97706; color: #92400e; }
+        .tip-red    { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+        .tip-amber  { background: #fffbeb; border-color: #b45309; color: #78350f; }
+        .tip-purple { background: #f5f3ff; border-color: #7c3aed; color: #5b21b6; }
+        .tip ul {
+            margin: 0.5rem 0 0;
+            padding-left: 1.3rem;
+        }
+        .tip ul li {
+            margin-bottom: 0.35rem;
+            line-height: 1.65;
+        }
+        .tip ul li:last-child {
+            margin-bottom: 0;
+        }
+        .tip a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: rgba(0,0,0,0.2);
+            text-underline-offset: 2px;
+            transition: text-decoration-color 0.15s;
+        }
+        .tip a:hover {
+            text-decoration-color: rgba(0,0,0,0.5);
+        }
+        .tip a img {
+            vertical-align: middle;
+            margin-right: 0.25rem;
+            border-radius: 3px;
+        }
 
-        /* CTA buttons */
+        /* CTA */
         .cta-button {
             display: inline-block;
-            padding: 0.7rem 1.6rem;
-            border-radius: 12px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 0.95rem;
@@ -419,27 +910,29 @@
         .cta-button:hover {
             transform: translateY(-2px);
         }
-        .cta-button.green  { background: linear-gradient(135deg, #4ade80, #22c55e); box-shadow: 0 4px 20px rgba(74,222,128,0.2); }
-        .cta-button.orange { background: linear-gradient(135deg, #fb923c, #f97316); box-shadow: 0 4px 20px rgba(251,146,60,0.2); }
-        .cta-button.blue   { background: linear-gradient(135deg, #f87171, #dc2626); box-shadow: 0 4px 20px rgba(248,113,113,0.2); }
-        .cta-button.red    { background: linear-gradient(135deg, #fb923c, #ea580c); box-shadow: 0 4px 20px rgba(251,146,60,0.2); }
-        .cta-button.purple { background: linear-gradient(135deg, #fbbf24, #d97706); box-shadow: 0 4px 20px rgba(251,191,36,0.2); }
+        .cta-button.green  { background: linear-gradient(135deg, #16a34a, #15803d); box-shadow: 0 2px 12px rgba(22,163,74,0.2); }
+        .cta-button.orange { background: linear-gradient(135deg, #d97706, #b45309); box-shadow: 0 2px 12px rgba(217,119,6,0.2); }
+        .cta-button.red    { background: linear-gradient(135deg, #dc2626, #b91c1c); box-shadow: 0 2px 12px rgba(220,38,38,0.2); }
+        .cta-button.amber  { background: linear-gradient(135deg, #ea580c, #c2410c); box-shadow: 0 2px 12px rgba(234,88,12,0.2); }
+        .cta-button.purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); box-shadow: 0 2px 12px rgba(124,58,237,0.2); }
 
         /* ═══════════════════════════════════════════
-           CALLOUT (Keybr deep-dive etc.)
+           CALLOUT
            ═══════════════════════════════════════════ */
         .callout {
-            padding: 1.6rem 1.8rem;
+            padding: 1.5rem 1.8rem;
             margin-top: 1.2rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
         }
         .callout h4 {
             font-weight: 700;
             font-size: 1.05rem;
-            margin-bottom: 0.6rem;
-            color: #eef0f6;
+            margin-bottom: 0.5rem;
         }
         .callout p {
-            color: #a0a7b8;
+            color: #4b5563;
             font-size: 1rem;
             line-height: 1.75;
         }
@@ -459,13 +952,13 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 14px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #e5e7eb;
         }
         .comparison-table th {
-            background: rgba(248,113,113,0.12);
-            color: #c8cdd8;
+            background: #fef2f2;
+            color: #374151;
             padding: 0.9rem 1rem;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.92rem;
@@ -475,13 +968,13 @@
         .comparison-table td {
             padding: 0.8rem 1rem;
             font-size: 0.95rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            color: #a0a7b8;
+            border-bottom: 1px solid #f3f4f6;
+            color: #4b5563;
         }
         .comparison-table tr:last-child td { border-bottom: none; }
         .comparison-table td:first-child {
             font-weight: 600;
-            color: #c8cdd8;
+            color: #111827;
         }
 
         /* ═══════════════════════════════════════════
@@ -494,36 +987,35 @@
             margin: 2rem 0;
         }
         .wpm-card {
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 2rem 1.5rem;
             text-align: center;
+            border: 2px solid;
         }
         .wpm-card.good {
-            background: rgba(74,222,128,0.06);
-            border: 1px solid rgba(74,222,128,0.2);
+            border-color: #4ade80;
         }
         .wpm-card.bad {
-            background: rgba(248,113,113,0.06);
-            border: 1px solid rgba(248,113,113,0.2);
+            border-color: #f87171;
         }
         .wpm-card .number {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 2.8rem;
             font-weight: 800;
         }
-        .wpm-card.good .number { color: #4ade80; }
-        .wpm-card.bad .number { color: #f87171; }
+        .wpm-card.good .number { color: #16a34a; }
+        .wpm-card.bad .number { color: #dc2626; }
         .wpm-card .detail {
             font-size: 1.1rem;
             font-weight: 600;
             margin-top: 0.2rem;
         }
-        .wpm-card.good .detail { color: #86efac; }
-        .wpm-card.bad .detail { color: #fca5a5; }
+        .wpm-card.good .detail { color: #166534; }
+        .wpm-card.bad .detail { color: #991b1b; }
         .wpm-card .verdict {
             font-size: 0.92rem;
             margin-top: 0.6rem;
-            color: #8b92a8;
+            color: #6b7280;
         }
         .wpm-card .badge {
             display: inline-block;
@@ -533,45 +1025,66 @@
             font-weight: 700;
             margin-bottom: 0.6rem;
         }
-        .wpm-card.good .badge { background: rgba(74,222,128,0.12); color: #4ade80; }
-        .wpm-card.bad .badge { background: rgba(248,113,113,0.12); color: #f87171; }
+        .wpm-card.good .badge { background: #dcfce7; color: #166534; }
+        .wpm-card.bad .badge { background: #fee2e2; color: #991b1b; }
 
         .wpm-caption {
             text-align: center;
-            color: #9aa0b4;
-            font-size: 1.02rem;
-            margin-top: 0.5rem;
-            font-style: italic;
+            color: #111827;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            line-height: 1.6;
+        }
         }
 
         /* ═══════════════════════════════════════════
            SPEED TIPS
            ═══════════════════════════════════════════ */
         .tips-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            max-width: 740px;
+            margin: 0 auto;
         }
         .tip-item {
-            padding: 1.6rem;
+            padding: 1.8rem 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
         }
         .tip-item .num {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.78rem;
+            font-size: 0.9rem;
             font-weight: 800;
-            color: #f87171;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.4rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
         }
+        .tip-item:nth-child(1) .num { background: #dc2626; }
+        .tip-item:nth-child(2) .num { background: #d97706; }
+        .tip-item:nth-child(3) .num { background: #ea580c; }
+        .tip-item:nth-child(4) .num { background: #16a34a; }
+        .tip-item:nth-child(5) .num { background: #7c3aed; }
         .tip-item h4 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
+        .tip-item:nth-child(1) h4 { color: #dc2626; }
+        .tip-item:nth-child(2) h4 { color: #d97706; }
+        .tip-item:nth-child(3) h4 { color: #ea580c; }
+        .tip-item:nth-child(4) h4 { color: #16a34a; }
+        .tip-item:nth-child(5) h4 { color: #7c3aed; }
         .tip-item p {
             font-size: 1rem;
-            color: #8b92a8;
+            color: #4b5563;
             line-height: 1.7;
         }
 
@@ -581,20 +1094,69 @@
         .faq-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.4rem;
         }
         .faq-item {
             padding: 1.5rem 1.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
         .faq-item h4 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            color: #111827;
         }
         .faq-item p {
             font-size: 1rem;
-            color: #8b92a8;
+            color: #4b5563;
             line-height: 1.7;
+        }
+        .faq-item .q-badge {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: #7c3aed;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           SCROLL ARROW
+           ═══════════════════════════════════════════ */
+        .scroll-prompt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .scroll-arrow {
+            display: inline-flex;
+            transition: transform 0.15s;
+            vertical-align: middle;
+        }
+        .scroll-arrow svg path {
+            stroke-dasharray: 30;
+            stroke-dashoffset: 30;
+            animation: draw-arrow 1.8s ease-in-out infinite;
+        }
+        .scroll-arrow:hover {
+            transform: scale(1.15);
+        }
+        @keyframes draw-arrow {
+            0% { stroke-dashoffset: 30; }
+            40% { stroke-dashoffset: 0; }
+            60% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -30; }
         }
 
         /* ═══════════════════════════════════════════
@@ -602,22 +1164,49 @@
            ═══════════════════════════════════════════ */
         .footer {
             text-align: center;
-            padding: 4rem 1.5rem;
-            background: #0e1019;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 3rem 1.5rem;
+            background: #1a1f2e;
+            color: #9ca3af;
         }
         .footer .quote {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 700;
             line-height: 1.9;
             max-width: 500px;
-            margin: 0 auto 1.2rem;
+            margin: 0 auto;
+            color: #f9fafb;
         }
-        .footer .heart { color: #f472b6; }
-        .footer .sub {
-            color: #5a607a;
+        .footer-sub {
+            margin-top: 2rem;
+            color: #6b7280;
             font-size: 0.95rem;
+        }
+        .footer-tools {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .footer-tool {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.15s;
+        }
+        .footer-tool:hover {
+            color: #f9fafb;
+        }
+        .footer-tool img {
+            border-radius: 3px;
+        }
+        .footer-sub .heart {
+            color: #ef4444;
+            font-size: 1.3em;
         }
 
         /* ═══════════════════════════════════════════
@@ -625,291 +1214,368 @@
            ═══════════════════════════════════════════ */
         @media (max-width: 700px) {
             body { font-size: 16px; }
-            .hero { padding: 4rem 1.2rem 3.5rem; }
-            .hero h1 { font-size: 2.3rem; }
-            .hero p { font-size: 1.1rem; }
+            .hero { padding: 3.5rem 1.2rem 2rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.05rem; }
+            .hero-keyboard { padding: 10px 10px 8px; }
+            .hero-key { height: 28px; min-width: 24px; font-size: 0.6rem; border-radius: 4px; }
+            .hero-key.tilde { min-width: 24px; font-size: 0.6rem; }
+            .hero-key.wide { min-width: 38px; font-size: 0.52rem; }
+            .hero-key.wide-lg { min-width: 46px; font-size: 0.52rem; }
+            .hero-key.mod { min-width: 32px; font-size: 0.5rem; }
+            .hero-key.space { max-width: 140px; font-size: 0.55rem; }
+            .hero-key.num { font-size: 0.58rem; }
+            .hero-kb-row { gap: 2px; margin-bottom: 2px; }
             .section { padding: 3.5rem 1.2rem; }
-            .section-title { font-size: 1.7rem; }
+            .section-title { font-size: 1.65rem; }
             .section-subtitle { font-size: 1rem; }
-            .path-step { grid-template-columns: 54px 1fr; }
-            .path-number { width: 42px; height: 42px; font-size: 1rem; }
+            .path-number { width: 40px; height: 40px; font-size: 1.05rem; }
             .path-content { padding: 1.4rem 1.3rem; }
             .path-content h3 { font-size: 1.2rem; }
-            .finger-map { grid-template-columns: 1fr; }
+            .path-overview { gap: 0.2rem; }
+            .path-ov-item { padding: 0.6rem 0.8rem; min-width: 80px; }
+            .path-ov-item img { width: 24px; height: 24px; }
+            .path-ov-name { font-size: 0.8rem; }
+            .path-ov-desc { font-size: 0.65rem; }
+            .fk { width: 28px; height: 26px; font-size: 0.65rem; border-radius: 6px; }
+            .fk-cols { gap: 3px; }
+            .fk-col { gap: 3px; }
+            .fk-sep { width: 10px; }
+            .fk-hand-label { font-size: 0.6rem; }
             .wpm-example { grid-template-columns: 1fr; }
-            .key { width: 40px; height: 40px; font-size: 0.85rem; border-radius: 8px; }
-            .key.thumb { width: 130px; }
-            .rules-grid { grid-template-columns: 1fr 1fr; }
-            .tips-list { grid-template-columns: 1fr; }
-            .footer .quote { font-size: 1.15rem; }
+            .footer .quote { font-size: 1.1rem; }
         }
-
         @media (max-width: 420px) {
             .hero h1 { font-size: 1.9rem; }
-            .rules-grid { grid-template-columns: 1fr; }
-            .path-step { grid-template-columns: 44px 1fr; }
-            .path-number { width: 36px; height: 36px; font-size: 0.9rem; }
+            .path-number { width: 40px; height: 40px; font-size: 1.05rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ═══════════════════ NAV ═══════════════════ -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">
+                <span class="brand-icon">
+                    <img src="assets/icons/favicon.svg" alt="" width="22" height="22">
+                </span>
+                <span><em class="brand-type">Type</em> <span class="brand-accent">Right</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#rules">Getting Started</a></li>
+                <li><a href="#path">Path</a></li>
+                <li><a href="#wpm">WPM</a></li>
+                <li><a href="#speed">Speed</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- ═══════════════════ HERO ═══════════════════ -->
     <header class="hero">
-        <h1><span class="gradient-text">Learn to Type</span><br>Without Looking</h1>
-        <p>A beginner-friendly guide to touch typing &mdash; with the tools and steps to get you there.</p>
+        <h1>
+            <span class="gradient-text" id="typed-target"></span><span class="cursor" id="cursor">|</span>
+            <br>
+            <span class="hero-sub" id="hero-sub">Without Looking Down</span>
+        </h1>
+        <p id="hero-desc">A beginner-friendly guide to <span class="hl hl-red">touch typing</span> (typing without looking at the keyboard) &mdash; with the tools and steps to get you there.</p>
+
+        <div class="hero-keyboard" id="hero-kb">
+            <div class="hero-kb-row">
+                <span class="hero-key tilde">~</span>
+                <span class="hero-key num">1</span><span class="hero-key num">2</span><span class="hero-key num">3</span><span class="hero-key num">4</span><span class="hero-key num">5</span><span class="hero-key num">6</span><span class="hero-key num">7</span><span class="hero-key num">8</span><span class="hero-key num">9</span><span class="hero-key num">0</span>
+                <span class="hero-key num">-</span><span class="hero-key num">=</span>
+                <span class="hero-key wide-lg">Bksp</span>
+            </div>
+            <div class="hero-kb-row">
+                <span class="hero-key wide">Tab</span>
+                <span class="hero-key">Q</span><span class="hero-key">W</span><span class="hero-key">E</span><span class="hero-key">R</span><span class="hero-key">T</span><span class="hero-key">Y</span><span class="hero-key">U</span><span class="hero-key">I</span><span class="hero-key">O</span><span class="hero-key">P</span>
+                <span class="hero-key">[</span><span class="hero-key">]</span><span class="hero-key">\</span>
+            </div>
+            <div class="hero-kb-row">
+                <span class="hero-key wide">Caps</span>
+                <span class="hero-key">A</span><span class="hero-key">S</span><span class="hero-key">D</span><span class="hero-key home">F</span><span class="hero-key">G</span><span class="hero-key">H</span><span class="hero-key home">J</span><span class="hero-key">K</span><span class="hero-key">L</span>
+                <span class="hero-key">;</span><span class="hero-key">'</span>
+                <span class="hero-key wide-lg">Enter</span>
+            </div>
+            <div class="hero-kb-row">
+                <span class="hero-key wide-lg">Shift</span>
+                <span class="hero-key">Z</span><span class="hero-key">X</span><span class="hero-key">C</span><span class="hero-key">V</span><span class="hero-key">B</span><span class="hero-key">N</span><span class="hero-key">M</span>
+                <span class="hero-key">,</span><span class="hero-key">.</span><span class="hero-key">/</span>
+                <span class="hero-key wide-lg">Shift</span>
+            </div>
+            <div class="hero-kb-row">
+                <span class="hero-key wide">Ctrl</span>
+                <span class="hero-key mod">Win</span>
+                <span class="hero-key wide">Alt</span>
+                <span class="hero-key space">Space</span>
+                <span class="hero-key wide">Alt</span>
+                <span class="hero-key mod">Fn</span>
+                <span class="hero-key wide">Ctrl</span>
+            </div>
+        </div>
+
+        <div class="hero-tldr" id="hero-tldr">
+            <div class="tldr-header">
+                <span class="tldr-badge">TL;DR</span>
+            </div>
+            <div class="tldr-flow">
+                <a href="https://www.typingclub.com/" target="_blank" rel="noopener" class="tldr-circle tldr-circle-1" title="TypingClub">
+                    <img src="assets/icons/typingclub.png" alt="TypingClub" width="24" height="24" onerror="this.style.display='none'">
+                </a>
+                <span class="tldr-arrow">&rarr;</span>
+                <a href="https://www.keybr.com/" target="_blank" rel="noopener" class="tldr-circle tldr-circle-2" title="Keybr">
+                    <img src="assets/icons/keybr.png" alt="Keybr" width="24" height="24" onerror="this.style.display='none'">
+                </a>
+                <span class="tldr-arrow">&rarr;</span>
+                <a href="https://monkeytype.com/" target="_blank" rel="noopener" class="tldr-circle tldr-circle-3" title="Monkeytype">
+                    <img src="assets/icons/monkeytype.png" alt="Monkeytype" width="24" height="24" onerror="this.style.display='none'">
+                </a>
+                <span class="tldr-arrow">&rarr;</span>
+                <a href="https://10fastfingers.com/" target="_blank" rel="noopener" class="tldr-circle tldr-circle-4" title="10FastFingers">
+                    <img src="assets/icons/10fastfingers.png" alt="10FastFingers" width="24" height="24" onerror="this.style.display='none'">
+                </a>
+            </div>
+        </div>
     </header>
 
-    <!-- ═══════════════════ 4 RULES ═══════════════════ -->
-    <section class="section">
-        <h2 class="section-title">Before You Start</h2>
-        <p class="section-subtitle">These four rules matter more than everything else combined.<br>Get these right and the rest follows.</p>
-        <div class="rules-grid">
-            <div class="rule-card card">
-                <div class="icon">👀</div>
-                <h3>Don't Look at the Keyboard</h3>
-                <p>Keep your eyes on the screen. Your speed will drop at first &mdash; that's part of learning.</p>
+    <div class="divider"><span class="dot"></span></div>
+
+    <!-- ═══════════════════ GETTING STARTED ═══════════════════ -->
+    <section class="section" id="rules">
+        <h2 class="section-title">Getting Started</h2>
+        <p class="section-subtitle">The rules that matter, and where your fingers go.</p>
+
+        <ul class="rules-list">
+            <li class="rule-eyes">
+                <div class="rule-head">
+                    <span class="rule-num">01</span>
+                    <div class="rule-body">
+                        <strong>Don't look at the keyboard.</strong>
+                    </div>
+                </div>
+                <span>Keep your eyes on the screen. It will feel slow at first &mdash; that's part of learning.</span>
+            </li>
+            <li class="rule-fingers">
+                <div class="rule-head">
+                    <span class="rule-num">02</span>
+                    <div class="rule-body">
+                        <strong>Use the correct finger for every key.</strong>
+                    </div>
+                </div>
+                <span>Your instinct is to use whichever finger feels natural. Fight that &mdash; each key has a dedicated finger.</span>
+            </li>
+            <li class="rule-accuracy">
+                <div class="rule-head">
+                    <span class="rule-num">03</span>
+                    <div class="rule-body">
+                        <strong>Accuracy before speed.</strong>
+                    </div>
+                </div>
+                <span>Slow, correct typing builds good habits. Speed comes naturally after.</span>
+            </li>
+            <li class="rule-practice">
+                <div class="rule-head">
+                    <span class="rule-num">04</span>
+                    <div class="rule-body">
+                        <strong>Practice a little every day.</strong>
+                    </div>
+                </div>
+                <span><span class="hl hl-red">Touch typing</span> is a muscle &mdash; it needs repetition, not marathon sessions.</span>
+            </li>
+        </ul>
+
+        <p class="section-subtitle scroll-prompt" style="margin-top:2rem; margin-bottom:1.5rem;">With those rules in mind, here's where each finger belongs.
+            <a href="#finger-placement" class="scroll-arrow" aria-label="Scroll to finger placement" onclick="event.preventDefault(); document.getElementById('finger-placement').scrollIntoView({ behavior: 'smooth', block: 'center' });">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+            </a>
+        </p>
+
+        <!-- Finger Placement -->
+        <div id="finger-placement" class="finger-section card">
+            <h3 class="finger-section-title">Finger Placement</h3>
+            <p class="hr-note" style="margin-bottom:1.5rem;margin-top:-0.5rem;">Each color represents one finger. <strong>F</strong> and <strong>J</strong> have bumps so you can find the home row without looking.</p>
+
+            <div class="finger-keyboard">
+                <div class="fk-hand-group">
+                    <div class="fk-cols">
+                        <div class="fk-col">
+                            <span class="fk lp">Q</span><span class="fk lp">A</span><span class="fk lp">Z</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk lr">W</span><span class="fk lr">S</span><span class="fk lr">X</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk lm">E</span><span class="fk lm">D</span><span class="fk lm">C</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk li">R</span><span class="fk li home">F</span><span class="fk li">V</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk li">T</span><span class="fk li">G</span><span class="fk li">B</span>
+                        </div>
+                    </div>
+                    <div class="fk-hand-label">Left Hand</div>
+                </div>
+
+                <div class="fk-sep"></div>
+
+                <div class="fk-hand-group">
+                    <div class="fk-cols">
+                        <div class="fk-col">
+                            <span class="fk ri">Y</span><span class="fk ri">H</span><span class="fk ri">N</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk ri">U</span><span class="fk ri home">J</span><span class="fk ri">M</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk rm">I</span><span class="fk rm">K</span><span class="fk rm">,</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk rr">O</span><span class="fk rr">L</span><span class="fk rr">.</span>
+                        </div>
+                        <div class="fk-col">
+                            <span class="fk rp">P</span><span class="fk rp">;</span><span class="fk rp">/</span>
+                        </div>
+                    </div>
+                    <div class="fk-hand-label">Right Hand</div>
+                </div>
             </div>
-            <div class="rule-card card">
-                <div class="icon">🎯</div>
-                <h3>Accuracy Before Speed</h3>
-                <p><span class="hl hl-green">Fast + sloppy = bad habits.</span> A slower, accurate typist builds a much better foundation.</p>
+
+            <div class="finger-tip">
+                <span class="finger-tip-icon">⌨</span>
+                <span>Return your fingers to the home row after every keystroke &mdash; that's the whole point of <span class="hl hl-red">touch typing</span>.</span>
             </div>
-            <div class="rule-card card">
-                <div class="icon">🖐️</div>
-                <h3>Use the Correct Fingers</h3>
-                <p>Every key has an assigned finger. It feels awkward at first. That awkwardness is temporary.</p>
-            </div>
-            <div class="rule-card card">
-                <div class="icon">🔄</div>
-                <h3>Practice Regularly</h3>
-                <p>Touch typing is a motor skill. Reading about it won't help. <span class="hl hl-purple">Your fingers need repetition.</span></p>
-            </div>
+            <p style="margin-top:1rem;font-size:0.9rem;"><a href="https://www.youtube.com/watch?v=vXsutlz0GIQ" target="_blank" rel="noopener" style="color:#FF0000;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Watch a visual guide to finger placement on YouTube</a></p>
         </div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- ═══════════════════ FINGER PLACEMENT ═══════════════════ -->
-    <section class="band band-darker">
-        <div class="band-inner">
-            <h2 class="section-title">Finger Placement</h2>
-            <p class="section-subtitle">Your fingers have a home. Learn it, and return to it after every keystroke.</p>
-
-            <div class="keyboard card">
-                <div class="finger-label">Left Hand</div>
-                <div class="keyboard-row">
-                    <div class="key">Q</div>
-                    <div class="key">W</div>
-                    <div class="key">E</div>
-                    <div class="key">R</div>
-                    <div class="key">T</div>
-                    <div class="key">Y</div>
-                </div>
-                <div class="keyboard-row">
-                    <div class="key">A</div>
-                    <div class="key">S</div>
-                    <div class="key">D</div>
-                    <div class="key home">F</div>
-                    <div class="key">G</div>
-                    <div class="key">H</div>
-                </div>
-                <div class="keyboard-row">
-                    <div class="key">Z</div>
-                    <div class="key">X</div>
-                    <div class="key">C</div>
-                    <div class="key">V</div>
-                    <div class="key">B</div>
-                    <div class="key">N</div>
-                </div>
-                <div class="keyboard-row">
-                    <div class="key thumb">Space</div>
-                </div>
-
-                <div class="finger-label" style="margin-top: 1.8rem;">Right Hand</div>
-                <div class="keyboard-row">
-                    <div class="key">U</div>
-                    <div class="key">I</div>
-                    <div class="key">O</div>
-                    <div class="key">P</div>
-                </div>
-                <div class="keyboard-row">
-                    <div class="key">J</div>
-                    <div class="key home">K</div>
-                    <div class="key">L</div>
-                    <div class="key">;</div>
-                </div>
-                <div class="keyboard-row">
-                    <div class="key">M</div>
-                    <div class="key">,</div>
-                    <div class="key">.</div>
-                    <div class="key">/</div>
-                </div>
-
-                <div class="key-legend">
-                    <span><span class="dot home-dot"></span> Home position &mdash; return here after every keystroke</span>
-                </div>
-            </div>
-
-            <div class="finger-map">
-                <div class="hand">
-                    <h4>Left Hand</h4>
-                    <div class="row"><span class="finger-name">Pinky</span> <span>Q &middot; A &middot; Z</span></div>
-                    <div class="row"><span class="finger-name">Ring</span> <span>W &middot; S &middot; X</span></div>
-                    <div class="row"><span class="finger-name">Middle</span> <span>E &middot; D &middot; C</span></div>
-                    <div class="row"><span class="finger-name">Index</span> <span>R &middot; F &middot; V &middot; T &middot; G &middot; B</span></div>
-                </div>
-                <div class="hand">
-                    <h4>Right Hand</h4>
-                    <div class="row"><span class="finger-name">Index</span> <span>Y &middot; H &middot; N &middot; U &middot; J &middot; M</span></div>
-                    <div class="row"><span class="finger-name">Middle</span> <span>I &middot; K &middot; ,</span></div>
-                    <div class="row"><span class="finger-name">Ring</span> <span>O &middot; L &middot; .</span></div>
-                    <div class="row"><span class="finger-name">Pinky</span> <span>P &middot; ; &middot; /</span></div>
-                </div>
-            </div>
-
-            <p class="keyboard-note">
-                The <strong>F</strong> and <strong>J</strong> keys have small bumps so you can find the home position <span class="hl hl-blue">without looking</span>.
-            </p>
-        </div>
-    </section>
+    <div class="divider"><span class="dot"></span></div>
 
     <!-- ═══════════════════ LEARNING PATH ═══════════════════ -->
-    <section class="section">
+    <section class="section" id="path">
         <h2 class="section-title">The Learning Path</h2>
-        <p class="section-subtitle">Follow these steps in order. Each tool has a <span class="hl hl-cyan">specific purpose</span> in your development.</p>
+        <p class="section-subtitle">Follow these steps in order. Each tool has a <span class="hl hl-red">specific purpose</span> in your development.</p>
+
+        <div class="path-overview">
+            <a href="https://www.typingclub.com/" target="_blank" rel="noopener" class="path-ov-item">
+                <img src="assets/icons/typingclub.png" alt="" width="28" height="28">
+                <span class="path-ov-name">TypingClub</span>
+                <span class="path-ov-desc">Learn</span>
+            </a>
+            <span class="path-ov-arrow">&rarr;</span>
+            <a href="https://www.keybr.com/" target="_blank" rel="noopener" class="path-ov-item">
+                <img src="assets/icons/keybr.png" alt="" width="28" height="28">
+                <span class="path-ov-name">Keybr</span>
+                <span class="path-ov-desc">Train</span>
+            </a>
+            <span class="path-ov-arrow">&rarr;</span>
+            <a href="https://monkeytype.com/" target="_blank" rel="noopener" class="path-ov-item">
+                <img src="assets/icons/monkeytype.png" alt="" width="28" height="28">
+                <span class="path-ov-name">Monkeytype</span>
+                <span class="path-ov-desc">Practice</span>
+            </a>
+            <span class="path-ov-arrow">&rarr;</span>
+            <a href="https://10fastfingers.com/" target="_blank" rel="noopener" class="path-ov-item">
+                <img src="assets/icons/10fastfingers.png" alt="" width="28" height="28">
+                <span class="path-ov-name">10FastFingers</span>
+                <span class="path-ov-desc">Test</span>
+            </a>
+        </div>
 
         <div class="path-wrapper">
 
             <!-- Step 1: TypingClub -->
             <div class="path-step step-1">
-                <div class="path-timeline">
-                    <div class="path-number">1</div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="path-number">1</div>
                 <div class="path-content card">
                     <div class="step-label">Learn</div>
-                    <h3>TypingClub</h3>
-                    <div class="tool-url">typingclub.com</div>
+                    <h3><a href="https://www.typingclub.com/" target="_blank" rel="noopener"><img src="assets/icons/typingclub.png" alt="" width="22" height="22" onerror="this.style.display='none'"> TypingClub &nearr;</a></h3>
                     <p>Your starting point. TypingClub teaches the keyboard <span class="hl hl-green">progressively</span> &mdash; individual keys, then combinations, then words, then sentences. Start from the beginning and don't skip ahead.</p>
                     <div class="tip tip-green">
-                        <strong>During lessons:</strong> Use the instructed finger. Don't look down. Slow down when you make mistakes. Repeat lessons that don't feel comfortable yet. Your goal isn't impressive WPM &mdash; it's <span class="hl hl-green">teaching your fingers where the keys are</span>.
+                        <strong>During lessons:</strong>
+                        <ul>
+                            <li>Use the instructed finger</li>
+                            <li>Don't look down</li>
+                            <li>Slow down when you make mistakes</li>
+                            <li>Repeat lessons that don't feel comfortable yet</li>
+                            <li>Your goal isn't impressive WPM &mdash; it's <span class="hl hl-green">teaching your fingers where the keys are</span></li>
+                        </ul>
                     </div>
-                    <a href="https://www.typingclub.com/" target="_blank" rel="noopener" class="cta-button green">Open TypingClub &rarr;</a>
                 </div>
             </div>
 
             <!-- Step 2: Keybr -->
             <div class="path-step step-2">
-                <div class="path-timeline">
-                    <div class="path-number">2</div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="path-number">2</div>
                 <div class="path-content card">
                     <div class="step-label">Train</div>
-                    <h3>Keybr</h3>
-                    <div class="tool-url">keybr.com</div>
-                    <p>Once you know the keyboard layout, Keybr <span class="hl hl-orange">strengthens your individual key movements</span>. It generates artificial text combinations to train muscle memory rather than word recognition.</p>
-
-                    <div class="callout card">
-                        <h4>🤔 "This isn't even English &mdash; what am I typing?"</h4>
-                        <p>That's intentional. When you type a familiar word like <strong>"the"</strong>, your brain recognizes the whole pattern. You're not really thinking <span class="hl hl-orange">T &rarr; H &rarr; E</span> separately. That's useful for real typing, but it hides weaknesses.</p>
-                        <p style="margin-top: 0.7rem;">Keybr strips away word familiarity so your fingers do the actual work. Think of the generated text as a sequence of <span class="hl hl-orange">keyboard movements to practice</span>, not words to understand.</p>
-                        <p style="margin-top: 0.7rem;">Keybr also <span class="hl hl-orange">adapts to your weaknesses</span> &mdash; characters you're slow with appear more often. Don't assume repeated letters mean something is broken.</p>
-                    </div>
+                    <h3><a href="https://www.keybr.com/" target="_blank" rel="noopener"><img src="assets/icons/keybr.png" alt="" width="22" height="22" onerror="this.style.display='none'"> Keybr &nearr;</a></h3>
+                    <p>Unlike TypingClub or Monkeytype, Keybr doesn't use real words. It <span class="hl hl-orange">generates artificial text combinations</span> specifically designed to train your fingers. This matters because real words let you cheat &mdash; your brain recognizes patterns and guesses the next letter. Keybr removes that crutch. It also <span class="hl hl-orange">adapts to your weaknesses</span>: characters you mistype or slow down on appear more frequently, so you're always working on what needs the most practice.</p>
 
                     <div class="tip tip-orange">
-                        <strong>How to use it:</strong> Don't worry about whether the text makes sense. Don't memorize it. Use the correct fingers. Don't race &mdash; let accuracy lead. Expect it to feel <span class="hl hl-orange">slower than normal typing</span>. That's expected, not a bad sign.
+                        <strong>How to use it:</strong>
+                        <ul>
+                            <li>Don't worry about whether the text makes sense</li>
+                            <li>Use the correct fingers</li>
+                            <li>Don't race &mdash; let accuracy lead</li>
+                            <li>Expect it to feel <span class="hl hl-orange">slower than normal typing</span> &mdash; that's expected, not a bad sign</li>
+                        </ul>
                     </div>
-                    <a href="https://www.keybr.com/" target="_blank" rel="noopener" class="cta-button orange">Open Keybr &rarr;</a>
                 </div>
             </div>
 
             <!-- Step 3: Monkeytype -->
             <div class="path-step step-3">
-                <div class="path-timeline">
-                    <div class="path-number">3</div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="path-number">3</div>
                 <div class="path-content card">
                     <div class="step-label">Practice</div>
-                    <h3>Monkeytype</h3>
-                    <div class="tool-url">monkeytype.com</div>
-                    <p>With a reasonable foundation, Monkeytype becomes your general practice tool. It gives you real English words and lets you develop <span class="hl hl-blue">speed, accuracy, rhythm, and consistency</span>.</p>
-                    <div class="tip tip-blue">
-                        <strong>Start simple:</strong> Use normal English-word mode. Focus on typing accurately without looking down. Don't worry about every feature &mdash; just type.
+                    <h3><a href="https://monkeytype.com/" target="_blank" rel="noopener"><img src="assets/icons/monkeytype.png" alt="" width="22" height="22" onerror="this.style.display='none'"> Monkeytype &nearr;</a></h3>
+                    <p>With a reasonable foundation, Monkeytype becomes your general practice tool. It gives you real English words and lets you develop <span class="hl hl-red">speed, accuracy, rhythm, and consistency</span>.</p>
+                    <div class="tip tip-red">
+                        <strong>Start simple:</strong>
+                        <ul>
+                            <li>Use normal English-word mode</li>
+                            <li>Focus on typing accurately without looking down</li>
+                            <li>Don't worry about every feature &mdash; just type</li>
+                        </ul>
                     </div>
-
-                    <div class="comparison-table-wrap">
-                        <h4>Keybr vs. Monkeytype</h4>
-                        <table class="comparison-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Keybr</th>
-                                    <th>Monkeytype</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Purpose</td>
-                                    <td>Train keyboard movements</td>
-                                    <td>Practice overall typing</td>
-                                </tr>
-                                <tr>
-                                    <td>Text</td>
-                                    <td>Generated combinations</td>
-                                    <td>Real English words</td>
-                                </tr>
-                                <tr>
-                                    <td>Focus</td>
-                                    <td>Individual characters &amp; weak areas</td>
-                                    <td>Speed, accuracy, rhythm</td>
-                                </tr>
-                                <tr>
-                                    <td>Best for</td>
-                                    <td>Strengthening the foundation</td>
-                                    <td>Building overall typing ability</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <a href="https://monkeytype.com/" target="_blank" rel="noopener" class="cta-button blue">Open Monkeytype &rarr;</a>
                 </div>
             </div>
 
             <!-- Step 4: 10FastFingers -->
             <div class="path-step step-4">
-                <div class="path-timeline">
-                    <div class="path-number">4</div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="path-number">4</div>
                 <div class="path-content card">
                     <div class="step-label">Test</div>
-                    <h3>10FastFingers</h3>
-                    <div class="tool-url">10fastfingers.com</div>
-                    <p>Use this to <span class="hl hl-red">measure your progress</span>, not as your entire training program. A test measures performance &mdash; it doesn't necessarily fix the reason you're slow.</p>
-                    <div class="tip tip-red">
-                        <strong>Use the test to answer:</strong> "How well am I typing now?" Then go back to the appropriate tool to work on what you found.
+                    <h3><a href="https://10fastfingers.com/" target="_blank" rel="noopener"><img src="assets/icons/10fastfingers.png" alt="" width="22" height="22" onerror="this.style.display='none'"> 10FastFingers &nearr;</a></h3>
+                    <p>Use this to <span class="hl hl-amber">measure your progress</span>, not as your entire training program. A test measures performance &mdash; it doesn't necessarily fix the reason you're slow.</p>
+                    <div class="tip tip-amber">
+                        <strong>Use the test to answer:</strong>
+                        <ul>
+                            <li>"How well am I typing now?"</li>
+                            <li>Then go back to the appropriate tool to work on what you found</li>
+                        </ul>
                     </div>
-                    <a href="https://10fastfingers.com/" target="_blank" rel="noopener" class="cta-button red">Open 10FastFingers &rarr;</a>
                 </div>
             </div>
 
             <!-- Step 5: Real Typing -->
             <div class="path-step step-5">
-                <div class="path-timeline">
-                    <div class="path-number">5</div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="path-number">5</div>
                 <div class="path-content card">
                     <div class="step-label">Apply</div>
                     <h3>Real-World Typing</h3>
-                    <p>The real goal isn't a high test score &mdash; it's <span class="hl hl-purple">effortless everyday typing</span>. Emails, messages, documents, code. Real typing adds capitalization, punctuation, numbers, and unpredictable words.</p>
+                    <p>The real goal isn't a high test score &mdash; it's <span class="hl" style="color:#7c3aed;">effortless everyday typing</span>. Emails, messages, documents, code. Real typing adds capitalization, punctuation, numbers, and unpredictable words.</p>
                     <div class="tip tip-purple">
                         <strong>You don't "graduate" from any tool.</strong> Move between them depending on what you need:
-                        <span class="hl hl-orange">Weak letter &rarr; Keybr</span>. <span class="hl hl-blue">General practice &rarr; Monkeytype</span>. <span class="hl hl-red">Measuring progress &rarr; 10FastFingers</span>. <span class="hl hl-green">Forgot proper technique &rarr; TypingClub</span>.
+                        <ul>
+                            <li><span class="hl hl-green">Forgot proper technique</span> &rarr; <a href="https://www.typingclub.com/" target="_blank" rel="noopener"><img src="assets/icons/typingclub.png" alt="" width="16" height="16" onerror="this.style.display='none'"> TypingClub</a></li>
+                            <li><span class="hl hl-orange">Certain letters feel slow or awkward</span> &rarr; <a href="https://www.keybr.com/" target="_blank" rel="noopener"><img src="assets/icons/keybr.png" alt="" width="16" height="16" onerror="this.style.display='none'"> Keybr</a></li>
+                            <li><span class="hl hl-red">Need general practice with real words</span> &rarr; <a href="https://monkeytype.com/" target="_blank" rel="noopener"><img src="assets/icons/monkeytype.png" alt="" width="16" height="16" onerror="this.style.display='none'"> Monkeytype</a></li>
+                            <li><span class="hl hl-amber">Want to measure your progress</span> &rarr; <a href="https://10fastfingers.com/" target="_blank" rel="noopener"><img src="assets/icons/10fastfingers.png" alt="" width="16" height="16" onerror="this.style.display='none'"> 10FastFingers</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -917,22 +1583,20 @@
         </div>
     </section>
 
-    <div class="divider"></div>
-
     <!-- ═══════════════════ WPM & ACCURACY ═══════════════════ -->
-    <section class="band band-darker">
+    <section class="band band-alt" id="wpm">
         <div class="band-inner">
             <h2 class="section-title">Understanding WPM &amp; Accuracy</h2>
-            <p class="section-subtitle"><span class="hl hl-cyan">WPM</span> (Words Per Minute) measures your speed. <span class="hl hl-cyan">Accuracy</span> measures how clean that speed is. Both matter.</p>
+            <p class="section-subtitle"><span class="hl hl-red">WPM</span> (Words Per Minute) measures your speed. <span class="hl hl-red">Accuracy</span> measures how clean that speed is. Both matter.</p>
 
             <div class="wpm-example">
-                <div class="wpm-card good">
+                <div class="wpm-card card good">
                     <div class="badge">✓ Better</div>
                     <div class="number">40 WPM</div>
                     <div class="detail">98% accuracy</div>
                     <div class="verdict">Fewer mistakes = cleaner typing</div>
                 </div>
-                <div class="wpm-card bad">
+                <div class="wpm-card card bad">
                     <div class="badge">✗ Worse</div>
                     <div class="number">50 WPM</div>
                     <div class="detail">80% accuracy</div>
@@ -944,75 +1608,88 @@
                 Speed tells you how fast you're going. Accuracy tells you how cleanly you're getting there.
             </p>
 
-            <div class="callout card" style="margin-top: 2.5rem;">
+            <div class="callout" style="margin-top: 2.5rem;">
                 <h4>Why does my WPM keep changing?</h4>
-                <p>That's normal. Results depend on which words appear, how familiar they are, your concentration, fatigue, and typing rhythm. A single test doesn't tell you much &mdash; <span class="hl hl-cyan">look at your performance over many sessions</span>.</p>
+                <p>That's normal. Results depend on which words appear, how familiar they are, your concentration, fatigue, and typing rhythm. A single test doesn't tell you much &mdash; <span class="hl hl-red">look at your performance over many sessions</span>.</p>
             </div>
         </div>
     </section>
 
     <!-- ═══════════════════ GETTING FASTER ═══════════════════ -->
-    <section class="section">
+    <section class="section" id="speed">
         <h2 class="section-title">Getting Faster</h2>
-        <p class="section-subtitle">Speed isn't about forcing your fingers to move harder. It's about <span class="hl gradient-text-warm">eliminating what slows you down</span>.</p>
+        <p class="section-subtitle">Speed isn't about forcing your fingers to move harder. It's about <span class="hl gradient-text">eliminating what slows you down</span>.</p>
 
         <div class="tips-list">
             <div class="tip-item card">
-                <div class="num">Tip 1</div>
+                <div class="num">1</div>
                 <h4>Stop Looking Down</h4>
-                <p>You can't build touch-typing habits while depending on your eyes. Make the screen your <span class="hl hl-blue">only visual reference</span>.</p>
+                <p>You can't build touch-typing habits while depending on your eyes. Make the screen your <span class="hl hl-red">only visual reference</span>.</p>
             </div>
             <div class="tip-item card">
-                <div class="num">Tip 2</div>
+                <div class="num">2</div>
                 <h4>Improve Accuracy</h4>
-                <p>Making many mistakes? Slow down. Your current speed may be beyond what your fingers can reliably handle.</p>
+                <p>Making many mistakes? <span style="color:#d97706; font-weight:600">Slow down</span>. Your current speed may be beyond what your fingers can reliably handle.</p>
             </div>
             <div class="tip-item card">
-                <div class="num">Tip 3</div>
+                <div class="num">3</div>
                 <h4>Eliminate Hesitation</h4>
-                <p>Notice where you pause. Are certain letters slow? Particular combinations uncomfortable? These are your <span class="hl hl-orange">weaknesses to train</span>.</p>
+                <p>Notice where you pause. Are certain letters slow? Particular combinations uncomfortable? These are your <span style="color:#ea580c; font-weight:600">weaknesses to train</span>.</p>
             </div>
             <div class="tip-item card">
-                <div class="num">Tip 4</div>
+                <div class="num">4</div>
                 <h4>Strengthen Weak Keys</h4>
                 <p>Use Keybr to identify and practice the specific keys holding you back. <span class="hl hl-green">Targeted practice</span> beats random tests.</p>
             </div>
             <div class="tip-item card">
-                <div class="num">Tip 5</div>
+                <div class="num">5</div>
                 <h4>Develop Rhythm</h4>
-                <p>Good typing feels smooth, not frantic. <em style="color:#c8cdd8;">type type type type type</em> beats <em style="color:#5a607a;">type &rarr; stop &rarr; type</em>. Smoothness comes before speed.</p>
+                <p>Good typing feels smooth, not frantic. <span class="hl hl-green">type type type type type</span> beats <span class="hl hl-red">type &rarr; stop &rarr; type</span>. <span class="hl hl-purple">Smoothness comes before speed</span>.</p>
             </div>
         </div>
     </section>
 
-    <div class="divider"></div>
-
     <!-- ═══════════════════ FAQ ═══════════════════ -->
-    <section class="band band-darker">
+    <section class="band band-alt" id="faq">
         <div class="band-inner">
             <h2 class="section-title">When You Feel Stuck</h2>
-            <p class="section-subtitle">Almost everyone hits these bumps. <span class="hl hl-purple">Here's what to do.</span></p>
+            <p class="section-subtitle">Almost everyone hits these bumps. <span class="hl" style="color:#7c3aed;">Here's what to do.</span></p>
 
             <div class="faq-list">
                 <div class="faq-item card">
-                    <h4>"I keep looking at the keyboard."</h4>
-                    <p>Slow down and force yourself to keep your eyes on the screen. It will feel worse before it feels better. <span class="hl hl-green">That's normal.</span></p>
+                    <div class="q-badge">Q</div>
+                    <div>
+                        <h4>"I keep looking at the keyboard."</h4>
+                        <p>Slow down and force yourself to keep your eyes on the screen. It will feel worse before it feels better. <span class="hl hl-green">That's normal.</span></p>
+                    </div>
                 </div>
                 <div class="faq-item card">
-                    <h4>"I'm extremely slow."</h4>
-                    <p>That's expected when learning. Don't respond by abandoning proper finger placement. <span class="hl hl-blue">Give your fingers time</span> to learn the movements.</p>
+                    <div class="q-badge">Q</div>
+                    <div>
+                        <h4>"I'm extremely slow."</h4>
+                        <p>That's expected when learning. Don't respond by abandoning proper finger placement. <span class="hl hl-red">Give your fingers time</span> to learn the movements.</p>
+                    </div>
                 </div>
                 <div class="faq-item card">
-                    <h4>"I keep using the wrong finger."</h4>
-                    <p>Don't ignore it. Slow down and consciously use the <span class="hl hl-orange">intended finger</span> until the correct movement becomes habitual.</p>
+                    <div class="q-badge">Q</div>
+                    <div>
+                        <h4>"I keep using the wrong finger."</h4>
+                        <p>Don't ignore it. Slow down and consciously use the <span class="hl hl-orange">intended finger</span> until the correct movement becomes habitual.</p>
+                    </div>
                 </div>
                 <div class="faq-item card">
-                    <h4>"I'm stuck at the same WPM."</h4>
-                    <p>Don't just take hundreds more speed tests. Look for the cause: weak characters? Frequent mistakes? Hesitation? <span class="hl hl-red">Identify the bottleneck</span> and train that specific weakness.</p>
+                    <div class="q-badge">Q</div>
+                    <div>
+                        <h4>"I'm stuck at the same WPM."</h4>
+                        <p>Don't just take hundreds more speed tests. Look for the cause: weak characters? Frequent mistakes? Hesitation? <span class="hl hl-rose">Identify the bottleneck</span> and train that specific weakness.</p>
+                    </div>
                 </div>
                 <div class="faq-item card">
-                    <h4>"My hands feel tense."</h4>
-                    <p>Don't type through pain. Reduce your speed, relax your fingers, and avoid pressing keys harder than necessary. Make sure your <span class="hl hl-purple">posture is comfortable</span>.</p>
+                    <div class="q-badge">Q</div>
+                    <div>
+                        <h4>"My hands feel tense."</h4>
+                        <p>Don't type through pain. Reduce your speed, relax your fingers, and avoid pressing keys harder than necessary. Make sure your <span class="hl" style="color:#7c3aed;">posture is comfortable</span>.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1021,13 +1698,127 @@
     <!-- ═══════════════════ FOOTER ═══════════════════ -->
     <footer class="footer">
         <div class="quote">
-            <span class="gradient-text">Learn the movement.</span><br>
-            <span class="gradient-text">Make it accurate.</span><br>
-            <span class="gradient-text">Make it automatic.</span><br>
-            <span class="gradient-text">Then make it fast.</span>
+            <span style="color:#4ade80">Learn the movement.</span><br>
+            <span style="color:#fbbf24">Make it accurate.</span><br>
+            <span style="color:#f87171">Make it automatic.</span><br>
+            <span style="color:#a78bfa">Then make it fast.</span>
         </div>
-        <p class="sub">Built with <span class="heart">&hearts;</span> to help people type better.</p>
+        <div class="footer-tools">
+            <a href="https://www.typingclub.com/" target="_blank" rel="noopener" class="footer-tool">
+                <img src="assets/icons/typingclub.png" alt="" width="18" height="18" onerror="this.style.display='none'">
+                <span>TypingClub</span>
+            </a>
+            <a href="https://www.keybr.com/" target="_blank" rel="noopener" class="footer-tool">
+                <img src="assets/icons/keybr.png" alt="" width="18" height="18" onerror="this.style.display='none'">
+                <span>Keybr</span>
+            </a>
+            <a href="https://monkeytype.com/" target="_blank" rel="noopener" class="footer-tool">
+                <img src="assets/icons/monkeytype.png" alt="" width="18" height="18" onerror="this.style.display='none'">
+                <span>Monkeytype</span>
+            </a>
+            <a href="https://10fastfingers.com/" target="_blank" rel="noopener" class="footer-tool">
+                <img src="assets/icons/10fastfingers.png" alt="" width="18" height="18" onerror="this.style.display='none'">
+                <span>10FastFingers</span>
+            </a>
+        </div>
+        <p class="footer-sub">Made with <span class="heart">&hearts;</span></p>
     </footer>
+
+    <script>
+        (function () {
+            /* ── Nav scroll & active link ── */
+            var nav = document.getElementById('nav');
+            var links = document.querySelectorAll('.nav-links a');
+            var sections = [];
+
+            links.forEach(function (link) {
+                var id = link.getAttribute('href').slice(1);
+                var el = document.getElementById(id);
+                if (el) sections.push({ id: id, el: el, link: link });
+            });
+
+            function onScroll() {
+                if (window.scrollY > 40) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                var scrollPos = window.scrollY + 120;
+                var current = null;
+                for (var i = 0; i < sections.length; i++) {
+                    if (sections[i].el.offsetTop <= scrollPos) {
+                        current = sections[i];
+                    }
+                }
+                links.forEach(function (l) { l.classList.remove('active'); });
+                if (current) current.link.classList.add('active');
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            /* ── Hero typing animation ── */
+            var target = document.getElementById('typed-target');
+            var cursor = document.getElementById('cursor');
+            var heroSub = document.getElementById('hero-sub');
+            var heroDesc = document.getElementById('hero-desc');
+            var phrases = ['Learn to Type', 'Build Accuracy', 'Gain Speed', 'Type Fast'];
+            var phraseIdx = 0;
+            var charIdx = 0;
+            var isDeleting = false;
+            var started = false;
+
+            function tick() {
+                var current = phrases[phraseIdx];
+
+                if (!isDeleting) {
+                    /* Typing forward */
+                    target.textContent = current.substring(0, charIdx + 1);
+                    charIdx++;
+
+                    if (charIdx === current.length) {
+                        /* Finished typing — pause then start erasing */
+                        setTimeout(tick, 1800);
+                        return;
+                    }
+                    setTimeout(tick, 70 + Math.random() * 50);
+                } else {
+                    /* Erasing */
+                    target.textContent = current.substring(0, charIdx - 1);
+                    charIdx--;
+
+                    if (charIdx === 0) {
+                        /* Finished erasing — next phrase */
+                        isDeleting = false;
+                        phraseIdx = (phraseIdx + 1) % phrases.length;
+                        setTimeout(tick, 400);
+                        return;
+                    }
+                    setTimeout(tick, 35 + Math.random() * 25);
+                }
+            }
+
+            /* Kick off after a short delay, reveal subtitle/desc on first erase */
+            setTimeout(function () {
+                tick();
+                started = true;
+            }, 500);
+
+            /* Show subtitle + description + keyboard after first phrase types out */
+            var heroKb = document.getElementById('hero-kb');
+            var shown = false;
+            function checkShowSub() {
+                if (!shown && started && !isDeleting && charIdx === phrases[phraseIdx].length) {
+                    shown = true;
+                    heroSub.classList.add('visible');
+                    heroDesc.classList.add('visible');
+                    setTimeout(function () { heroKb.classList.add('visible'); }, 200);
+                }
+                if (!shown) requestAnimationFrame(checkShowSub);
+            }
+            requestAnimationFrame(checkShowSub);
+        })();
+    </script>
 
 </body>
 </html>
