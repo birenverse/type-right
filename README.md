@@ -2,6 +2,8 @@
 
 A beginner's guide to [touch typing](https://en.wikipedia.org/wiki/Touch_typing) — typing without looking at the keyboard. The site walks complete novices through proper finger placement, introduces four free tools in the right order, and covers the habits that actually improve speed and accuracy.
 
+**Live site:** [birenverse.github.io/type-right](https://birenverse.github.io/type-right/)
+
 **Last updated:** September 2026
 
 ## What's Inside
